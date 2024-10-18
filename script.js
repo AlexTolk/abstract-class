@@ -1,72 +1,65 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var Resource = /** @class */ (function () {
-    function Resource(data) {
+"use strict";
+class Resource {
+    constructor(data) {
         this.data = data;
     }
-    Resource.prototype.get = function () {
+    get() {
         return this.data;
-    };
-    Resource.prototype.getOne = function (key, value) {
-        return this.data.find(function (item) { return item[key] === value; });
-    };
-    Resource.prototype.add = function (newObj) {
+    }
+    getOne(key, value) {
+        return this.data.find(item => item[key] === value);
+    }
+    add(newObj) {
         this.data.push(newObj);
         return this.data;
-    };
-    Resource.prototype.update = function (key, value, partialData) {
-        var index = this.data.findIndex(function (item) { return item[key] === value; });
-        if (index === -1)
-            return undefined;
-        this.data[index] = __assign(__assign({}, this.data[index]), partialData);
-        return this.data[index];
-    };
-    Resource.prototype.delete = function (key, value) {
-        var index = this.data.findIndex(function (item) { return item[key] === value; });
-        if (index === -1)
-            return undefined;
-        var deleted = this.data.splice(index, 1)[0];
-        return deleted;
-    };
-    return Resource;
-}());
-var UserModel = /** @class */ (function (_super) {
-    __extends(UserModel, _super);
-    function UserModel(data) {
-        return _super.call(this, data) || this;
     }
-    return UserModel;
-}(Resource));
-var users = new UserModel([
-    { id: 1, name: 'Alice', phone: '1234', email: 'alice@example.com', address: 'Wonderland' }
+    update(key, value, partialData) {
+        const index = this.data.findIndex(item => item[key] === value);
+        if (index === -1)
+            return undefined;
+        this.data[index] = Object.assign(Object.assign({}, this.data[index]), partialData);
+        return this.data[index];
+    }
+    delete(key, value) {
+        const index = this.data.findIndex(item => item[key] === value);
+        if (index === -1)
+            return undefined;
+        const [deleted] = this.data.splice(index, 1);
+        return deleted;
+    }
+}
+class UserModel extends Resource {
+    constructor(data) {
+        super(data);
+    }
+}
+const users = new UserModel([
+    { id: 1, name: 'Alice', phone: '1234', email: 'alice@example.com', address: 'Wonderland' },
+    { id: 2, name: 'Batman', phone: '1234', email: 'alice@example.com', address: 'Gotham' },
+    { id: 3, name: 'Luke Skywalker', phone: '1234', email: 'alice@example.com', address: 'Galaxy far far away' },
+    { id: 4, name: 'Karlson', phone: '1234', email: 'alice@example.com', address: 'Stockholm' },
 ]);
 console.log(users.get());
-console.log(users.add({ id: 2, name: 'Bob', phone: '5678', email: 'bob@example.com', address: 'Earth' }));
+console.log(users.add({ id: 5, name: 'Neo', phone: '5678', email: 'bob@example.com', address: 'Matrix' }));
 console.log(users.getOne('id', 1));
-console.log(users.update('id', 1, { name: 'Alice Updated' }));
-console.log(users.delete('id', 2));
+console.log(users.update('id', 1, { name: 'Alice Smith' }));
+console.log(users.delete('id', 5));
 console.log(users.get());
+class OrdersModel extends Resource {
+    constructor(data) {
+        super(data);
+    }
+}
+const orders = new OrdersModel([
+    { id: 1, price: 200 },
+    { id: 2, price: 2000 },
+    { id: 3, price: 300 },
+    { id: 4, price: 250 },
+    { id: 5, price: 20 },
+]);
+console.log(orders.get());
+console.log(orders.add({ id: 6, price: 350 }));
+console.log(orders.getOne('id', 1));
+console.log(orders.update('id', 1, { price: 250 }));
+console.log(orders.delete('id', 6));
+console.log(orders.get());
