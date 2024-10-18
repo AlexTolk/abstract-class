@@ -47,7 +47,7 @@ const users = new UserModel([
     { id: 1, name: 'Alice', phone: '1234', email: 'alice@example.com', address: 'Wonderland' },
     { id: 2, name: 'Batman', phone: '1234', email: 'alice@example.com', address: 'Gotham' },
     { id: 3, name: 'Luke Skywalker', phone: '1234', email: 'alice@example.com', address: 'Galaxy far far away' },
-    { id: 4, name: 'Karlson', phone: '1234', email: 'alice@example.com', address: 'Stockholm' },
+    { id: 4, name: 'Karlson', phone: '1234', email: 'alice@example.com', address: 'some roof in Stockholm' },
 ]);
 
 console.log(users.get());
